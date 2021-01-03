@@ -1,22 +1,11 @@
 from flask import Flask, jsonify, redirect, request
 from flask import render_template
-from models.wrapper import StyleBased
 import os
-from enum import Enum
-import pickle
 import pandas as pd
-from flasgger import Swagger
-
+from models.preprocessing import clean_text
 from models.model_getter import *
 
-
 Model_dict = {
-    "NGRAM": {
-        "WRD": getNgram(WordLevelTextgram),
-        "CHR": getNgram(CharLevelTextNgram),
-        "POS": getNgram(WordLevelPOSNgram),
-        "DEFAULT": "POS"
-    },
     "BASIC-BOW": {
         "RF": getBasicBow("RF"),
         "MNB": getBasicBow("MNB"),
@@ -29,74 +18,9 @@ Model_dict = {
         "SVC": getTfidfBow("SVC"),
         "DEFAULT": "SVC"
     },
-    "STYLE-BASED": {
-        "RF": StyleBased("RF"),
-        "LR": StyleBased("LR"),
-        "DEFAULT": "RF"
-    }
 }
 
-# Model_dict = {
-#     "NGRAM": {
-#         "WRD": get_ngram_wrd(),
-#         "CHR": get_ngram_chr(),
-#         # "POS": get_ngram_pos()
-#     },
-#     "BASIC-BOW": {
-#         "RF": None,
-#         "MNB": None,
-#         "SVC": None
-#     },
-#     "TF-IDF-BOW": {
-#         "RF": None,
-#         "MNB": None,
-#         "SVC": None
-#     },
-#     "STYLE-BASED": {
-#         "RF": None,
-#         "SVC": None
-#     }
-# }
-
-
-
-# def load_model(mainModel, subModel):
-#   pickle_filename = "./models/saved_models/"+mainModel+ '/' + subModel+".pkl"
-#   picklefile = open(pickle_filename, 'rb')
-#   model = pickle.load(picklefile)
-#   picklefile.close()
-#   return model
-
-
-# def load_models():
-#     models = []
-#     try:
-#         for mainModel in list(Model_dict.keys()):
-#             if mainModel == 'NGRAM': continue
-#             for subModel in list(Model_dict[mainModel].keys()):
-#                 model= mainModel + '/' + subModel
-#                 try:
-#                     Model_dict[mainModel][subModel] = load_model(mainModel, subModel)
-#                     print(model + 'was installed successfully!')
-#                 except Exception as e:
-#                     print('An error has occurred while installing ' + model)
-#                     print(e)
-                
-#     except Exception as e: 
-#         print(e)
-#     return models
-
-
-def load_dataset():
-    col_list = ["author","text"]
-    return pd.read_csv("dataset/train.csv",usecols=col_list),pd.read_csv("dataset/test.csv",usecols=col_list)
-
-# load_models()
-
-train_data, test_data = load_dataset()
-
 app = Flask(__name__)
-swagger = Swagger(app)
 
 
 def getModelFromDict(args):
@@ -119,11 +43,11 @@ def runMethodOfModel(methodName, args,material):
     results = []
     if(args[-1]=="ALL"):
         for key in list(Model_dict.keys()):
-            results.append(getattr(Model_dict[key][Model_dict[key]["DEFAULT"]], methodName)(material))
+            results.append(getattr(Model_dict[key][Model_dict[key]["DEFAULT"]], methodName)(*material))
         results = [most_frequent(results)]
     else:
         model =  getModelFromDict(args)
-        results.append(getattr(model,methodName)(material))
+        results.append(getattr(model,methodName)(*material))
 
     return results
 
@@ -140,17 +64,34 @@ def predict():
     text = parameters.get("text")
     args = parameters.get("args")
 
-    return jsonify(runMethodOfModel("predict",args,text))
+    return jsonify(runMethodOfModel("predict",args,[text]))
 
-
+#Verisetini böler
+@app.route("/split",methods = ["POST"])
+def change_split():
+    global X_train,y_train,X_test,y_test
+    try:
+        parameters = request.get_json()
+        test_ratio = parameters.get("test_ratio")
+        X_train, X_test, y_train, y_test = get_train_test_dataset(cleaned_data,test_ratio)
+        return jsonify(["Data Splitted with {} test data ratio".format(test_ratio)])
+    except Exception as e:
+        print(e)
+        return jsonify(["Error on splitting dataset"])
 
 #Mevcut modeli eğitir ve train accuracy'sini döndürür
 
 @app.route('/train', methods= ["POST"])
 def train(): 
-    parameters = request.get_json()
-    args = parameters.get("args")
-    return jsonify(runMethodOfModel("fit",args,test_data))
+    try:
+        parameters = request.get_json()
+        args = parameters.get("args")
+        runMethodOfModel("fit",args,(X_train,y_train))
+        return jsonify(["Training Success"])
+    except Exception as e:
+        print(e)
+        return jsonify ["ERROR ON TRAINING"]
+
 
 
 
@@ -160,7 +101,8 @@ def train():
 def test(): 
     parameters = request.get_json()
     args = parameters.get("args")
-    return jsonify(runMethodOfModel("evaluate", args, train_data))
+    print(len(X_test))
+    return jsonify(runMethodOfModel("evaluate", args, (X_test,y_test)))
 
 
 if __name__ == '__main__':

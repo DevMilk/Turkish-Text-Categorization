@@ -1,10 +1,42 @@
-function getInput(){return document.getElementById("input").value;}
+function getTextInput(){return document.getElementById("input").value;}
 /*
 BOW = 0
 NGRAM = 2
 STYLE = 3
 ALL = 1
 */
+var action = document.getElementById("acts");
+
+var enums = {
+	"BASIC": "BASIC-BOW",
+	"TF-IDF": "TF-IDF-BOW",
+	"SVC": "SVC",
+	"Random Forest": "RF",
+	"Multinomial Naive Bayes": "MNB",
+	"Logistic Regression": "LR",
+	"ALL IN ONE": "ALL",
+	"BOW": null
+
+};
+var desc = {
+	"BOW": "IN THIS MODEL, A TEXT (SUCH AS A SENTENCE OR A DOCUMENT) IS \
+	REPRESENTED AS THE BAG (MULTISET) OF ITS WORDS, DISREGARDING GRAMMAR AND EVEN WORD ORDER BUT KEEPING MULTIPLICITY."
+}
+
+function getInput(text,default_val=0.2,min_val=0.01,max_val=0.99){
+	do{
+		var value = prompt(text,default_val);
+		if(value==null)
+		  return
+
+		if (value != parseFloat(value, 10) || value <=min_val || value >=max_val)
+		  alert("0.01 ve 0.99 arasında bir sayı girin.");
+	  
+	}while(value != parseFloat(value, 10) || value <=min_val || value >=max_val);
+
+	return parseFloat(value);
+  
+}
 
 function POST(endpoint, requestBody,handleFunc){
 	const xhr = new XMLHttpRequest();   // new HttpRequest instance 
@@ -23,43 +55,24 @@ function POST(endpoint, requestBody,handleFunc){
     }
 }
 
-var enums = {
-	"BASIC": "BASIC-BOW",
-	"TF-IDF": "TF-IDF-BOW",
-	"STYLE-BASED":"STYLE-BASED",
-	"SVC": "SVC",
-	"Random Forest": "RF",
-	"Multinomial Naive Bayes": "MNB",
-	"Logistic Regression": "LR",
-	"LR": "LR",
-
-	"Character Based": "CHR",
-	"Word Based" : "WRD",
-	"POS Based" : "POS",
-
-	"ALL IN ONE": "ALL",
-	"NGRAM": "NGRAM",
-	"BOW": null
-
-};
-var desc = {
-	"BOW": "IN THIS MODEL, A TEXT (SUCH AS A SENTENCE OR A DOCUMENT) IS \
-	REPRESENTED AS THE BAG (MULTISET) OF ITS WORDS, DISREGARDING GRAMMAR AND EVEN WORD ORDER BUT KEEPING MULTIPLICITY.",
-	"NGRAM": "NGRAM IS A METHOD THAT EXTRACTS MOST FREQUENT WORD, CHARACTER OR POS TAGS TO \
-		IDENTIFY DOCUMENT",
-	"STYLE-BASED": "STYLE BASED CLASSIFICATION USES DOZENS OF ATTRIBUTES OF TEXT SUCH AS TOTAL SENTENCES IN TEXT, \
-	AVERAGE WORD LENGTH IN TEXT, NOUN COUNT, VERB COUNT ETC. "
-
+function callIfSplit(){
+	let endpoint = document.getElementById("acts").value;
+	if(endpoint=="split")
+		requestToRespondingAction([]);
 }
 // Additional: BASIC/TF-IDF SVC/RF/MNB CHR/WRD/POS
-function predict(args){
-	let input = getInput();
+function requestToRespondingAction(args){
+	let endpoint = document.getElementById("acts").value;
+	let test_ratio = 0.2;
+	if(endpoint=="split")
+		test_ratio = getInput("Enter test ratio");
+
 	let request = {
-		"text": input,
-		"args": args
+		"text": getTextInput(),
+		"args": args,
+		"test_ratio": test_ratio
 	}
 	console.log("Sended JSON: ",request);
-	endpoint = document.getElementById("acts").value;
 	POST("/"+endpoint,request,function(responseArray){document.getElementById("prediction").innerText=responseArray[0];})
 
 }
@@ -76,6 +89,7 @@ function getParent(element){
 
 let descriptionLoc = document.getElementById("description");
 function click(event){
+	console.log("tıklanma çalışıyor");
 	currentElement = event.target; 
 	current =  getArgFromElement(currentElement);
 	args = [current];
@@ -83,13 +97,9 @@ function click(event){
 	while(current!="ALL IN ONE" && currentElement!=null){
 		if(currentElement.tagName=="MENUITEM" && !args.includes(current))
 			args.push(current);
-		if(desc[current]!=null)
-			descriptionLoc.innerText = desc[current];
 		currentElement = getParent(currentElement);
 		current = getArgFromElement(currentElement);
 	}
-
-	
 
 
 	let argsArray = []
@@ -99,15 +109,12 @@ function click(event){
 				argsArray.push(enums[args[i]])
 		}
 	}
-	predict(argsArray);
+
+
+	requestToRespondingAction(argsArray);
 
 
 
-}
-var items = document.getElementsByTagName("a");
-
-for(var i=0;i<items.length;i++){
-	items[i].onclick = click;
 }
 
 
