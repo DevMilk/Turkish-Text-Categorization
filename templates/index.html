@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Author Identification</title>
+<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/IndexStyle.css') }}">
+
+</head>
+
+<body>
+
+	<div id="output">
+		<a id="prediction">ISAAC NEWTON</a>
+		<a id="description">NGRAM IS A METHOD THAT EXTRACTS MOST FREQUENT WORD, CHARACTER OR POS TAGS TO
+		IDENTIFY DOCUMENT</a>
+
+	</div>
+	<div class="center">
+		<textarea id="input">Test test test</textarea>
+
+	  	<select name="acts" id="acts">
+		    <option value="predict">Predict</option>
+		    <option value="test">Test</option>
+		    <option value="train">Train</option>
+	 	</select>
+		<nav>
+				<menu>
+
+					<menuitem class="main">
+						<a>ALL IN ONE</a>
+					</menuitem>
+
+					<menuitem>
+
+						<a>NGRAM</a>
+						<menu>
+
+			               <menuitem>
+			                  <a>Character Based</a>
+							</menuitem>
+
+							<menuitem>
+			                  <a>Word Based</a>
+							</menuitem>
+
+							<menuitem>
+			                  <a>POS Based</a>
+							</menuitem>
+
+						</menu>
+					</menuitem>
+
+					<menuitem>
+
+						<a>BOW</a>
+						<menu>
+
+		               <menuitem>
+		                  <a>BASIC</a>
+		                  <menu>
+		                     <menuitem><a>SVC</a></menuitem>
+		                     <menuitem><a>Random Forest</a></menuitem>
+		                     <menuitem><a>Multinomial Naive Bayes</a></menuitem>
+		                  </menu>  
+						</menuitem>
+
+						<menuitem>
+		                  <a>TF-IDF</a>
+		                  <menu>
+		                     <menuitem><a>SVC</a></menuitem>
+		                     <menuitem><a>Random Forest</a></menuitem>
+		                     <menuitem><a>Multinomial Naive Bayes</a></menuitem>
+		                  </menu>  
+						</menuitem>
+
+						</menu>
+					</menuitem>
+					<menuitem>
+
+						<a>STYLE-BASED</a>
+						<menu>
+
+		               <menuitem>
+		                  <a>Logistic Regression</a>
+						</menuitem>
+
+						<menuitem>
+		                  <a>Random Forest</a>
+						</menuitem>
+
+						</menu>
+					</menuitem>
+				</menu>
+		</nav>
+
+
+	</div>
+
+	
+</body>
+
+			<script type="text/javascript" src="{{ url_for('static', filename='js/IndexJs.js') }}"></script>
+
+</html>
