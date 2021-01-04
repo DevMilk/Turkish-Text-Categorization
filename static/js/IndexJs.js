@@ -15,6 +15,8 @@ var enums = {
 	"Multinomial Naive Bayes": "MNB",
 	"Logistic Regression": "LR",
 	"ALL IN ONE": "ALL",
+	"XGBoost": "XGB",
+	"Nearest Centroid": "NC",
 	"BOW": null
 
 };
@@ -63,15 +65,18 @@ function callIfSplit(){
 // Additional: BASIC/TF-IDF SVC/RF/MNB CHR/WRD/POS
 function requestToRespondingAction(args){
 	let endpoint = document.getElementById("acts").value;
-	let test_ratio = 0.2;
-	if(endpoint=="split")
-		test_ratio = getInput("Enter test ratio");
-
-	let request = {
+	
+		let request = {
 		"text": getTextInput(),
 		"args": args,
-		"test_ratio": test_ratio
 	}
+
+	if(endpoint=="split"){
+		test_ratio = getInput("Enter test ratio");
+		request = {"test_ratio": test_ratio}
+	}
+
+
 	console.log("Sended JSON: ",request);
 	POST("/"+endpoint,request,function(responseArray){document.getElementById("prediction").innerText=responseArray[0];})
 
@@ -89,7 +94,6 @@ function getParent(element){
 
 let descriptionLoc = document.getElementById("description");
 function click(event){
-	console.log("tıklanma çalışıyor");
 	currentElement = event.target; 
 	current =  getArgFromElement(currentElement);
 	args = [current];

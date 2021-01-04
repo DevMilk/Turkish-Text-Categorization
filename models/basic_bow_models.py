@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
+from sklearn.neighbors import NearestCentroid
 from sklearn import tree
 from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
@@ -19,12 +20,16 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from models.preprocessing import clean_text
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
+from xgboost import XGBClassifier
+
 class Direct_BOW_Model:  
   def __init__(self, model):
     self.models = {
         'SVC': LinearSVC(),
         'RF': RandomForestClassifier(),
-        'MNB': MultinomialNB()       
+        'MNB': MultinomialNB(),
+        'NC' : NearestCentroid(),
+        "XGB": XGBClassifier()       
     }
     self.model = self.models[model]
     self.bow_transformer = None
@@ -47,7 +52,9 @@ class TfIdf_BOW_Model:
     self.models = {
         'SVC': LinearSVC(),
         'RF': RandomForestClassifier(),
-        'MNB': MultinomialNB()       
+        'MNB': MultinomialNB(),
+        'NC' : NearestCentroid(),
+        "XGB": XGBClassifier()                
     }
     self.model = Pipeline([
     ('vect', CountVectorizer()),

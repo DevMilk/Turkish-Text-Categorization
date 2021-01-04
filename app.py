@@ -10,12 +10,16 @@ Model_dict = {
         "RF": getBasicBow("RF"),
         "MNB": getBasicBow("MNB"),
         "SVC": getBasicBow("SVC"),
+        "NC": getBasicBow("NC"),
+        "XGB": getBasicBow("XGB"),
         "DEFAULT": "SVC"
     },
     "TF-IDF-BOW": {
         "RF": getTfidfBow("RF"),
         "MNB": getTfidfBow("MNB"),
         "SVC": getTfidfBow("SVC"),
+        "NC": getTfidfBow("NC"),
+        "XGB": getTfidfBow("XGB"),
         "DEFAULT": "SVC"
     },
 }
