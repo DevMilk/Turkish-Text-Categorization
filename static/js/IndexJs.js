@@ -54,6 +54,8 @@ function POST(endpoint, requestBody,handleFunc){
 				  return
 			  handleFunc(JSON.parse(this.responseText));
 		  }
+	  else
+	  	document.getElementById("prediction").innerText = "SERVER ERROR"
     }
 }
 
@@ -62,15 +64,25 @@ function callIfSplit(){
 	if(endpoint=="split")
 		requestToRespondingAction([]);
 }
+
+function wait() {
+  return new Promise(resolve => {
+    resolve();
+  });
+}
+
 // Additional: BASIC/TF-IDF SVC/RF/MNB CHR/WRD/POS
-function requestToRespondingAction(args){
+async function requestToRespondingAction(args){
+
+
+
 	let endpoint = document.getElementById("acts").value;
-	
-		let request = {
+	document.getElementById("prediction").innerText = (endpoint+"ing...").toUpperCase()
+	const result = await wait();
+	let request = {
 		"text": getTextInput(),
 		"args": args,
 	}
-
 	if(endpoint=="split"){
 		test_ratio = getInput("Enter test ratio");
 		request = {"test_ratio": test_ratio}
@@ -92,8 +104,11 @@ function getParent(element){
 	return element.parentNode;
 }
 
+
 let descriptionLoc = document.getElementById("description");
 function click(event){
+
+
 	currentElement = event.target; 
 	current =  getArgFromElement(currentElement);
 	args = [current];

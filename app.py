@@ -26,7 +26,6 @@ app = Flask(__name__)
 
 
 def getModelFromDict(args):
-    print(args[-1],args[-2])
     return Model_dict[args[-1]][args[-2]]
 
 def most_frequent(List): 
@@ -104,7 +103,6 @@ def train():
 def test(): 
     parameters = request.get_json()
     args = parameters.get("args")
-    print(len(X_test))
     return jsonify(runMethodOfModel("evaluate", args, (X_test,y_test)))
 
 

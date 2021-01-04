@@ -19,8 +19,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfTransformer
 from models.preprocessing import clean_text
 from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score,f1_score
 from xgboost import XGBClassifier
+
+def convert_results_to_str(y_test,y_pred):
+  return str(confusion_matrix(y_test, y_pred))+"\n\n accuracy: "+str(accuracy_score(y_test,y_pred)) \
+    +"\n f1 score: " + str(f1_score(y_test,y_pred,average="weighted"))
 
 class Direct_BOW_Model:  
   def __init__(self, model):
@@ -45,7 +49,7 @@ class Direct_BOW_Model:
   def evaluate(self, X_test, y_test):
     text_bow_X = self.bow_transformer.transform(X_test)
     y_pred = self.model.predict(text_bow_X)
-    return str(confusion_matrix(y_test, y_pred))+"\n\n"+str(accuracy_score(y_test,y_pred))
+    return convert_results_to_str(y_test,y_pred)
 
 class TfIdf_BOW_Model:  
   def __init__(self, model):
@@ -70,4 +74,4 @@ class TfIdf_BOW_Model:
 
   def evaluate(self, X_test, y_test):
     y_pred = self.model.predict(X_test)
-    return str(confusion_matrix(y_test, y_pred))+"\n\n"+str(accuracy_score(y_test,y_pred))
+    return convert_results_to_str(y_test,y_pred)
