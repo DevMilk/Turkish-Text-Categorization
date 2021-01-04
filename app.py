@@ -11,16 +11,14 @@ Model_dict = {
         "MNB": getBasicBow("MNB"),
         "SVC": getBasicBow("SVC"),
         "NC": getBasicBow("NC"),
-        "XGB": getBasicBow("XGB"),
-        "DEFAULT": "SVC"
+        "XGB": getBasicBow("XGB")
     },
     "TF-IDF-BOW": {
         "RF": getTfidfBow("RF"),
         "MNB": getTfidfBow("MNB"),
         "SVC": getTfidfBow("SVC"),
         "NC": getTfidfBow("NC"),
-        "XGB": getTfidfBow("XGB"),
-        "DEFAULT": "SVC"
+        "XGB": getTfidfBow("XGB")
     },
 }
 
@@ -47,7 +45,8 @@ def runMethodOfModel(methodName, args,material):
     results = []
     if(args[-1]=="ALL"):
         for key in list(Model_dict.keys()):
-            results.append(getattr(Model_dict[key][Model_dict[key]["DEFAULT"]], methodName)(*material))
+            for ml_model in list(Model_dict[key].keys()):
+                results.append(getattr(Model_dict[key][ml_model], methodName)(*material))
         results = [most_frequent(results)]
     else:
         model =  getModelFromDict(args)
