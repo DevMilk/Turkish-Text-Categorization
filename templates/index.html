@@ -9,63 +9,64 @@
 </head>
 
 <body>
+	<div id="parameters"></div>
+	<div id="other">
+		<div id="output">
+			<a id="prediction">Dont forget training model, after splitting the data </a>
+			<a id="description">TURKISH TEXT TOPIC CATEGORIZATION IS DONE BY MACHINE LEARNING</a>
 
-	<div id="output">
-		<a id="prediction">Dont forget training model, after splitting the data </a>
-		<a id="description">TURKISH TEXT TOPIC CATEGORIZATION IS DONE BY MACHINE LEARNING</a>
+		</div>
+		<div class="center">
+			<textarea id="input">SPAM SPAM SPAM</textarea>
+		  	<select name="acts" id="acts" onchange="callIfSplit();">
+			    <option value="predict">Predict</option>
+			    <option value="split">Split</option>
+			    <option value="test">Test</option>
+			    <option value="train">Train</option>
+		 	</select>
+			<nav>
+					<menu>
 
-	</div>
-	<div class="center">
-		<textarea id="input">SPAM SPAM SPAM</textarea>
-	  	<select name="acts" id="acts" onchange="callIfSplit();">
-		    <option value="predict">Predict</option>
-		    <option value="split">Split</option>
-		    <option value="test">Test</option>
-		    <option value="train">Train</option>
-	 	</select>
-		<nav>
-				<menu>
-
-					<menuitem class="main">
-						<a>ALL IN ONE</a>
-					</menuitem>
-
-					<menuitem>
-
-						<a>BOW</a>
-						<menu>
-
-		               <menuitem>
-		                  <a>BASIC</a>
-		                  <menu>
-		                     <menuitem><a>SVC</a></menuitem>
-		                     <menuitem><a>Random Forest</a></menuitem>
-		                     <menuitem><a>Multinomial Naive Bayes</a></menuitem>
-		                     <menuitem><a>Nearest Centroid</a></menuitem>
-		                     <menuitem><a>XGBoost</a></menuitem>
-		                  </menu>  
+						<menuitem class="main">
+							<a>ALL IN ONE</a>
 						</menuitem>
 
 						<menuitem>
-		                  <a>TF-IDF</a>
-		                  <menu>
-		                     <menuitem><a>SVC</a></menuitem>
-		                     <menuitem><a>Random Forest</a></menuitem>
-		                     <menuitem><a>Multinomial Naive Bayes</a></menuitem>
-		                     <menuitem><a>Nearest Centroid</a></menuitem>
-		                     <menuitem><a>XGBoost</a></menuitem>
-		                  </menu>  
+
+							<a>BOW</a>
+							<menu>
+
+			               <menuitem>
+			                  <a>BASIC</a>
+			                  <menu>
+			                     <menuitem><a>SVC</a></menuitem>
+			                     <menuitem><a>Random Forest</a></menuitem>
+			                     <menuitem><a>Multinomial Naive Bayes</a></menuitem>
+			                     <menuitem><a>Nearest Centroid</a></menuitem>
+			                     <menuitem><a>XGBoost</a></menuitem>
+			                  </menu>  
+							</menuitem>
+
+							<menuitem>
+			                  <a>TF-IDF</a>
+			                  <menu>
+			                     <menuitem><a>SVC</a></menuitem>
+			                     <menuitem><a>Random Forest</a></menuitem>
+			                     <menuitem><a>Multinomial Naive Bayes</a></menuitem>
+			                     <menuitem><a>Nearest Centroid</a></menuitem>
+			                     <menuitem><a>XGBoost</a></menuitem>
+			                  </menu>  
+							</menuitem>
+
+							</menu>
 						</menuitem>
+					</menu>
+			</nav>
 
-						</menu>
-					</menuitem>
-				</menu>
-		</nav>
 
+		</div>
 
 	</div>
-
-	
 </body>
 
 <script type="text/javascript">

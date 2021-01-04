@@ -1,7 +1,31 @@
 :root {
   edgeSize: 1vw;
 }
+#form{
+  position: fixed;
+  height: max-content;
+  width: max-content;
+  margin-top: 10px;
+  left: 40%;
+  margin-top: 2vh;
+  background: #7755ff;
+  border-radius: 6px;
+  color: white;
+  border: 2px solid #ffffff;
+  max-height: 20vh;
+  overflow-y: scroll;
 
+}
+label, button{
+  font-family: 'Abel';
+  font-size: x-large;
+  font-variant: all-small-caps;
+}
+button{
+  background: white;
+  padding: 4px !important;
+  color: #7755ff;
+}
 html{
 
 	background: black;

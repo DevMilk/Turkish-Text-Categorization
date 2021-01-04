@@ -37,6 +37,12 @@ class Direct_BOW_Model:
     }
     self.model = self.models[model]
     self.bow_transformer = None
+  def get_params(self,a,b):
+    return self.model.get_params()
+
+  def set_params_of_model(self,params):
+    model = self.model
+    model.set_params(**params)
 
   def fit(self, X_train, y_train):
     self.bow_transformer = CountVectorizer().fit(X_train)
@@ -60,10 +66,24 @@ class TfIdf_BOW_Model:
         'NC' : NearestCentroid(),
         "XGB": XGBClassifier()                
     }
+    self.modelName = model
     self.model = Pipeline([
     ('vect', CountVectorizer()),
     ('tfidf', TfidfTransformer()),
     ('clf', self.models[model] ),
+    ])
+
+  def get_params(self,a,b):
+    model = self.models[self.modelName]
+    return model.get_params()
+
+  def set_params_of_model(self,params):
+    model = self.models[self.modelName]
+    model.set_params(**params)
+    self.model = Pipeline([
+    ('vect', CountVectorizer()),
+    ('tfidf', TfidfTransformer()),
+    ('clf', model),
     ])
 
   def fit(self, X_train, y_train):

@@ -5,6 +5,7 @@ import pandas as pd
 from models.preprocessing import clean_text
 from models.model_getter import *
 
+
 Model_dict = {
     "BASIC-BOW": {
         "RF": getBasicBow("RF"),
@@ -39,6 +40,7 @@ def most_frequent(List):
             num = i 
   
     return num 
+
 
 def runMethodOfModel(methodName, args,material):
     results = []
@@ -88,11 +90,13 @@ def train():
     try:
         parameters = request.get_json()
         args = parameters.get("args")
+        params = parameters.get("params") #dictionary olmalı
+        runMethodOfModel("set_params_of_model",args,[(params)])
         runMethodOfModel("fit",args,(X_train,y_train))
         return jsonify(["Training Success"])
     except Exception as e:
         print(e)
-        return jsonify ["ERROR ON TRAINING"]
+        return jsonify(["ERROR ON TRAINING"])
 
 
 
@@ -106,5 +110,10 @@ def test():
     return jsonify(runMethodOfModel("evaluate", args, (X_test,y_test)))
 
 
+@app.route('/param', methods= ["POST"])
+def get_param(): 
+    parameters = request.get_json()
+    args = parameters.get("args")
+    return jsonify(runMethodOfModel("get_params", args,(0,0)))
 if __name__ == '__main__':
     pass
