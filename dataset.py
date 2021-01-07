@@ -1,8 +1,4 @@
-import os
-import sys
-import pandas as pd
-import numpy as np
-from models.preprocessing import clean_text
+from preprocessing import clean_text
 from sklearn.model_selection import train_test_split
 
 
