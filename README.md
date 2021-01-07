@@ -13,4 +13,4 @@ When installing required libraries you may have problem with Xgboost. [Here](htt
 3.  Training
 4.  Testing/Evaluation
 
-![](usage/usage.gif)               
+![](usage/usage.mp4)               
