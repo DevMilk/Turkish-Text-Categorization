@@ -12,7 +12,9 @@ When installing required libraries you may have problem with Xgboost. [Here](htt
 2.  Dataset Splitting
 3.  Training
 4.  Testing/Evaluation
-
+5.  Model Selection
+6.  All In One runs all models
+<br>
 <p align="center">
-  <img src="https://github.com/DevMilk/Turkish-Text-Categorization/blob/main/usage/usage.gif">
+  <img width =640 height=360 src="https://github.com/DevMilk/Turkish-Text-Categorization/blob/main/usage/usage.gif">
 </p>            
