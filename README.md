@@ -13,4 +13,6 @@ When installing required libraries you may have problem with Xgboost. [Here](htt
 3.  Training
 4.  Testing/Evaluation
 
-![](usage/usage.mp4)               
+<p align="center">
+  <img src="https://github.com/DevMilk/Turkish-Text-Categorization/edit/main/usage/usage.gif">
+</p>            
