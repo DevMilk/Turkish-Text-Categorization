@@ -18,3 +18,23 @@ When installing required libraries you may have problem with Xgboost. [Here](htt
 <p align="center">
   <img width =704 height=396 src="https://github.com/DevMilk/Turkish-Text-Categorization/blob/main/usage/usage.gif">
 </p>            
+
+
+## Machine Learning Models    
+1. Bag Of Words
+
+    - BASIC
+
+        * SVC
+        * Random Forest
+        * Multinomial Naive Bayes
+        * Nearest Centroid
+        * XGBoost
+    - TF-IDF
+
+        * SVC
+        * Random Forest
+        * Multinomial Naive Bayes
+        * Nearest Centroid
+        * XGBoost
+    
