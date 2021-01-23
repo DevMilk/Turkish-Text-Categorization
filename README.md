@@ -18,13 +18,6 @@ When installing required libraries you may have problem with Xgboost. [Here](htt
 5.  Model Selection
 6.  All In One runs all models
 <br>
-
-<p align="center">
-  <img width =704 height=396 src="https://github.com/DevMilk/Turkish-Text-Categorization/blob/main/usage/screenshot.png">
-</p>        
-<p align="center">
-  <img width =704 height=396 src="https://github.com/DevMilk/Turkish-Text-Categorization/blob/main/usage/screenshot2.png">
-</p>        
 <p align="center">
   <img width =704 height=396 src="https://github.com/DevMilk/Turkish-Text-Categorization/blob/main/usage/usage.gif">
 </p>            
